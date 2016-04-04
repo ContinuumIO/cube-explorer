@@ -10,6 +10,7 @@ To install, first install HoloViews and Iris.  At the moment, cube-explorer reli
 ```
 conda install -c ioam holoviews
 conda install -c scitools iris
+conda install -c pandas
 ```
 
 and then install the latest git version of the two packages, e.g. via:
