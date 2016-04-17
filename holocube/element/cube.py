@@ -91,9 +91,6 @@ class CubeInterface(GridColumns):
             raise TypeError('HoloCube data must be be an iris HoloCube type.')
 
         if kdims:
-            if len(kdims) != len(data.dim_coords):
-                raise ValueError('Supplied key dimensions must match '
-                                 'HoloCube dim_coords.')
             coords = []
             for kd in kdims:
                 coord = data.coords(kd.name if isinstance(kd, Dimension) else kd)
@@ -127,6 +124,8 @@ class CubeInterface(GridColumns):
             coord_names = [c.name() for c in holocube.data.dim_coords
                            if c.name() in holocube.kdims]
             dim_inds = [coord_names.index(d.name) for d in holocube.kdims]
+            dim_inds += [i for i in range(len(holocube.data.dim_coords))
+                         if i not in dim_inds]
             data = data.transpose(dim_inds)
         elif expanded:
             idx = holocube.get_dimension_index(dim)
